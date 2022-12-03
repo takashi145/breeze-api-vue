@@ -11,7 +11,7 @@
         <input type="password" id="password" v-model="form.password" class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
       </div>
       <button type="submit" class="text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg">Login</button>
-      <router-link to="#" class="mt-5 text-gray-600 hover:text-gray-800 hover:underline">新規登録</router-link>
+      <router-link to="/register" class="mt-5 text-gray-600 hover:text-gray-800 hover:underline">新規登録はこちら</router-link>
     </form>
   </div>
 </template>
