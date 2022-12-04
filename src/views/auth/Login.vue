@@ -17,6 +17,7 @@
         </div>
       </div>
       <button type="submit" class="text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg">Login</button>
+      <router-link to="/forgot-password" class="mt-5 text-gray-600 hover:text-gray-800 hover:underline">パスワードをお忘れですか?</router-link>
       <router-link to="/register" class="mt-5 text-gray-600 hover:text-gray-800 hover:underline">新規登録はこちら</router-link>
     </form>
   </div>
@@ -38,7 +39,7 @@ const errors = ref({});
 
 const login = async() => {
   try {
-   await axios.get('sanctum/csrf-cookie')
+    await axios.get('sanctum/csrf-cookie')
     await axios.post('/login', form.value)
     .then(() => {
       router.push('/')
