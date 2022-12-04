@@ -1,22 +1,18 @@
 <template>
-  <div>
-    <div>
-      <button @click="logout">Logout</button>
-    </div>
-    <div v-if="user">
-      <h1>{{ user.name }}</h1>
-      <p>{{ user.email }}</p>
+  <auth-layout>
+    <div v-if="user" class="ml-3">
+      <h1>ユーザ名: {{ user.name }}</h1>
+      <p>メールアドレス: {{ user.email }}</p>
     </div>  
-  </div>
-  
+  </auth-layout>
 </template>
 
 <script setup>
 import { onMounted, ref } from "vue";
 import axios from 'axios';
-import router from "@/router";
+import AuthLayout from '@/components/layouts/AuthLayout.vue';
 
-const user = ref(null)
+const user = ref({})
 
 onMounted(() => {
   getUser()
@@ -32,10 +28,5 @@ const getUser = async () => {
   }catch(e) {
     console.log(e)
   }
-}
-
-const logout = async () => {
-  await axios.post('logout')
-  router.push('/login')
 }
 </script>
