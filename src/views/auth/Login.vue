@@ -1,3 +1,31 @@
+<script setup>
+import { ref } from 'vue';
+import axios from 'axios';
+import { useRouter } from 'vue-router';
+import DefaultLayout from '@/components/layouts/DefaultLayout.vue';
+
+const router = useRouter();
+
+const form = ref({
+  email: '',
+  password: ''
+})
+
+const errors = ref({});
+
+const login = async () => {
+  try {
+    await axios.get('sanctum/csrf-cookie')
+    await axios.post('/login', form.value)
+    await router.push('/')
+  }catch(e) {
+    if(e.response.status === 422) {
+      errors.value = e.response.data.errors;
+    }
+  }
+} 
+</script>
+
 <template>
   <default-layout>
     <div class="container px-5 py-24 mx-auto flex">
@@ -24,31 +52,3 @@
     </div>
   </default-layout>
 </template>
-
-<script setup>
-import { ref } from 'vue';
-import axios from 'axios';
-import { useRouter } from 'vue-router';
-import DefaultLayout from '@/components/layouts/DefaultLayout.vue';
-
-const router = useRouter();
-
-const form = ref({
-  email: '',
-  password: ''
-})
-
-const errors = ref({});
-
-const login = async() => {
-  try {
-    await axios.get('sanctum/csrf-cookie')
-    await axios.post('/login', form.value)
-    .then(() => {
-      router.push('/')
-    }) 
-  }catch(e) {
-    errors.value = e.response.data.errors
-  }
-} 
-</script>
