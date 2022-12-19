@@ -3,6 +3,9 @@ import { ref } from 'vue';
 import axios from 'axios';
 import { useRouter } from 'vue-router';
 import DefaultLayout from '@/components/layouts/DefaultLayout.vue';
+import { useAuthStore } from '@/store/auth'
+
+const authStore = useAuthStore();
 
 const router = useRouter();
 
@@ -17,7 +20,8 @@ const login = async () => {
   try {
     await axios.get('sanctum/csrf-cookie')
     await axios.post('/login', form.value)
-    await router.push('/')
+    await authStore.getUser();
+    router.push('/')
   }catch(e) {
     if(e.response.status === 422) {
       errors.value = e.response.data.errors;

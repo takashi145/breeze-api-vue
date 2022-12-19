@@ -1,7 +1,39 @@
+<script setup>
+import { ref } from 'vue';
+import axios from 'axios';
+import { useRouter } from 'vue-router';
+import DefaultLayout from '@/components/layouts/DefaultLayout.vue';
+import { useAuthStore } from '../../store/auth'
+
+const authStore = useAuthStore();
+
+const router = useRouter();
+
+const form = ref({
+  name: '',
+  email: '',
+  password: '',
+  password_confirmation: ''
+})
+
+const errors = ref({})
+
+const register = async() => {
+  try {
+    await axios.get('sanctum/csrf-cookie')
+    await axios.post('/register', form.value)
+    await authStore.getUser();
+    router.push('/')
+  }catch(e) {
+    errors.value = e.response.data.errors
+  }
+} 
+</script>
+
 <template>
   <default-layout>
     <div class="container px-5 py-24 mx-auto flex">
-      <form @submit.prevent="register" class="lg:w-1/3 md:w-2/3 bg-white rounded-lg p-12 flex flex-col mx-auto w-full mt-10 md:mt-0 relative z-10 shadow-md">
+      <form @submit.prevent="register" class="lg:w-2/5 md:w-4/5 bg-white rounded-lg p-12 flex flex-col mx-auto w-full mt-10 md:mt-0 relative z-10 shadow-md">
         <h2 class="mb-4 text-gray-900 text-lg mb-1 font-medium title-font">Sign up</h2>
         <div class="relative mb-4">
           <label for="name" class="leading-7 text-sm text-gray-600">Username <span class="text-red-500">(必須)</span></label>
@@ -35,32 +67,3 @@
   </default-layout>
   
 </template>
-
-<script setup>
-import { ref } from 'vue';
-import axios from 'axios';
-import { useRouter } from 'vue-router';
-import DefaultLayout from '@/components/layouts/DefaultLayout.vue';
-
-const router = useRouter();
-
-const form = ref({
-  name: '',
-  email: '',
-  password: '',
-  password_confirmation: ''
-})
-
-const errors = ref({})
-
-const register = async() => {
-  try {
-    await axios.get('sanctum/csrf-cookie')
-    await axios.post('/register', form.value)
-    router.push('/')
-  }catch(e) {
-    errors.value = e.response.data.errors
-  }
- 
-} 
-</script>

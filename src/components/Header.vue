@@ -19,12 +19,21 @@
 import axios from 'axios'
 import { useRouter } from 'vue-router';
 import AppLogo from './AppLogo.vue';
+import { useAuthStore } from '@/store/auth'
+
+const authStore = useAuthStore()
 
 const router = useRouter()
 
 const logout = async () => {
-  await axios.get('/sanctum/csrf-cookie')
-  await axios.post('logout')
-  router.push('/login')
+  try {
+    await axios.get('sanctum/csrf-cookie')
+    await axios.post('/logout');
+    authStore.authUser = null;
+    router.push('/login');
+  }catch(e) {
+    console.log(e.response.data.message)
+  }
+  
 }
 </script>
