@@ -29,6 +29,9 @@ import { ref } from 'vue';
 import axios from 'axios';
 import { useRoute, useRouter } from 'vue-router';
 import DefaultLayout from '@/components/layouts/DefaultLayout.vue';
+import { useAuthStore } from '../../store/auth';
+
+const authStore = useAuthStore();
 
 const router = useRouter();
 const route = useRoute();
@@ -46,9 +49,11 @@ const submit = async() => {
   try {
     await axios.get('sanctum/csrf-cookie')
     await axios.post('/reset-password', form.value)
-    .then(() => {
-      router.push('/login')
-    }) 
+    authStore.authMessage = {
+      status: "success",
+      text: "パスワードを変更しました"
+    }
+    router.push('/login') 
   }catch(e) {
     errors.value = e.response.data.errors
   }

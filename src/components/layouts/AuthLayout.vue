@@ -2,16 +2,15 @@
   <div>
     <Header />
     <main>
+      <FlashMessage />
       <slot />
     </main>
   </div>
 </template>
 
-<script>
+<script setup>
 import Header from '../Header.vue'
-export default {
-  components: { Header },
-}
+import FlashMessage from '../FlashMessage.vue';
 </script>
 
 <style>

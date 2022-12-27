@@ -23,6 +23,10 @@ const register = async() => {
     await axios.get('sanctum/csrf-cookie')
     await axios.post('/register', form.value)
     await authStore.getUser();
+    authStore.authMessage = {
+      status: "success",
+      text: "ログインしました"
+    }
     router.push('/')
   }catch(e) {
     errors.value = e.response.data.errors

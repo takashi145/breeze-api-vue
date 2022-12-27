@@ -1,32 +1,15 @@
 <template>
   <auth-layout>
-    <div v-if="user" class="ml-3">
-      <h1>ユーザ名: {{ user.name }}</h1>
-      <p>メールアドレス: {{ user.email }}</p>
+    <div v-if="authStore.user" class="ml-3">
+      <h1>ユーザ名: {{ authStore.user.name }}</h1>
+      <p>メールアドレス: {{ authStore.user.email }}</p>
     </div>  
   </auth-layout>
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
-import axios from 'axios';
 import AuthLayout from '@/components/layouts/AuthLayout.vue';
+import { useAuthStore } from '../store/auth';
 
-const user = ref({})
-
-onMounted(() => {
-  getUser()
-})
-
-const getUser = async () => {
-  try {
-    await axios.get('/api/user')
-    .then((res) => {
-      console.log(res.data)
-      user.value = res.data
-    })
-  }catch(e) {
-    console.log(e)
-  }
-}
+const authStore = useAuthStore();
 </script>

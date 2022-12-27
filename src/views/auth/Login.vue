@@ -20,8 +20,12 @@ const login = async () => {
   try {
     await axios.get('sanctum/csrf-cookie')
     await axios.post('/login', form.value)
-    await authStore.getUser();
-    router.push('/')
+    await authStore.getUser()
+    authStore.authMessage = {
+      status: "success",
+      text: "ログインしました"
+    }
+    return router.push('/')
   }catch(e) {
     if(e.response.status === 422) {
       errors.value = e.response.data.errors;

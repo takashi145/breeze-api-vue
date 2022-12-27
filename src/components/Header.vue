@@ -30,6 +30,10 @@ const logout = async () => {
     await axios.get('sanctum/csrf-cookie')
     await axios.post('/logout');
     authStore.authUser = null;
+    authStore.authMessage = {
+      status: "alert",
+      text: "ログアウトしました"
+    }
     router.push('/login');
   }catch(e) {
     console.log(e.response.data.message)

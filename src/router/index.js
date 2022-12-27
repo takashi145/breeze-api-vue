@@ -41,17 +41,16 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
+  const authStore = useAuthStore();
   if(to.matched.some(record => record.meta.auth)) {
-    const authUser = useAuthStore();
-    if(authUser.user) {
+    if(authStore.user) {
       next();
     }else {
       next({ name: 'login' });
     }
   }else {
-    const authUser = useAuthStore();
-    if(authUser.user) {
-      next({ name: '/' });
+    if(authStore.user) {
+      next({ name: 'home' });
     }else {
       next();
     }
