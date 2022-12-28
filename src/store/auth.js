@@ -4,11 +4,9 @@ import axios from 'axios';
 export const useAuthStore = defineStore("auth", {
   state: () => ({
     authUser: null,
-    authMessage: null
   }),
   getters: {
     user: (state) => state.authUser,
-    message: (state) => state.authMessage
   },
   actions: {
     async getUser() {

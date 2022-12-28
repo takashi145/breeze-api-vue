@@ -4,8 +4,10 @@ import axios from 'axios';
 import { useRouter } from 'vue-router';
 import DefaultLayout from '@/components/layouts/DefaultLayout.vue';
 import { useAuthStore } from '@/store/auth'
+import { useMessageStore } from '@/store/message'
 
 const authStore = useAuthStore();
+const messageStore = useMessageStore();
 
 const router = useRouter();
 
@@ -21,10 +23,7 @@ const login = async () => {
     await axios.get('sanctum/csrf-cookie')
     await axios.post('/login', form.value)
     await authStore.getUser()
-    authStore.authMessage = {
-      status: "success",
-      text: "ログインしました"
-    }
+    messageStore.setMessage('success', 'ログインしました')
     return router.push('/')
   }catch(e) {
     if(e.response.status === 422) {

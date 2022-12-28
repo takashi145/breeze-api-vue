@@ -20,8 +20,10 @@ import axios from 'axios'
 import { useRouter } from 'vue-router';
 import AppLogo from './AppLogo.vue';
 import { useAuthStore } from '@/store/auth'
+import { useMessageStore } from '@/store/message';
 
 const authStore = useAuthStore()
+const messageStore = useMessageStore();
 
 const router = useRouter()
 
@@ -30,10 +32,7 @@ const logout = async () => {
     await axios.get('sanctum/csrf-cookie')
     await axios.post('/logout');
     authStore.authUser = null;
-    authStore.authMessage = {
-      status: "alert",
-      text: "ログアウトしました"
-    }
+    messageStore.setMessage('alert', 'ログアウトしました')
     router.push('/login');
   }catch(e) {
     console.log(e.response.data.message)
