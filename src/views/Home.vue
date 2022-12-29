@@ -4,6 +4,7 @@
       <h1>ユーザ名: {{ authStore.user.name }}</h1>
       <p>メールアドレス: {{ authStore.user.email }}</p>
     </div>  
+    <router-link to="/about">about</router-link>
   </auth-layout>
 </template>
 

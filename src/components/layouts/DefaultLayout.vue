@@ -2,6 +2,14 @@
 import Footer from '../Footer.vue';
 import AppLogo from '../AppLogo.vue';
 import FlashMessage from '../FlashMessage.vue';
+import { onMounted } from '@vue/runtime-core';
+import { useAuthStore } from '@/store/auth';
+
+const authStore = useAuthStore();
+
+onMounted(() => {
+  authStore.isGuest = true;
+})
 
 </script>
 <template>

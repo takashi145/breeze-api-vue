@@ -23,8 +23,9 @@ const login = async () => {
     await axios.get('sanctum/csrf-cookie')
     await axios.post('/login', form.value)
     await authStore.getUser()
+    authStore.isGuest = false;
     messageStore.setMessage('success', 'ログインしました')
-    return router.push('/')
+    return router.push(authStore.path)
   }catch(e) {
     if(e.response.status === 422) {
       errors.value = e.response.data.errors;

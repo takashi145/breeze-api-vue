@@ -12,7 +12,3 @@
 import Header from '../Header.vue'
 import FlashMessage from '../FlashMessage.vue';
 </script>
-
-<style>
-
-</style>
